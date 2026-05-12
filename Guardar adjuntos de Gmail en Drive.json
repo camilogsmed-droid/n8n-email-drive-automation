@@ -1,0 +1,406 @@
+{
+  "name": "Guardar adjuntos de Gmail en Drive",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {}
+          ]
+        },
+        "filters": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -704,
+        -160
+      ],
+      "id": "1f512801-dc4c-42b8-b0fa-ce9b478a1ee3",
+      "name": "Gmail Trigger",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "QZfeVFckr58y7Pxe",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "messageId": "={{ $json.id }}",
+        "simple": false,
+        "options": {
+          "downloadAttachments": "={{ true }}"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -496,
+        -160
+      ],
+      "id": "c57140ca-8d0d-4986-bacd-ce8143e8dd07",
+      "name": "Get a message",
+      "webhookId": "f8aed1f8-121b-47e3-a7e6-a7af8c09f8a6",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "QZfeVFckr58y7Pxe",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.headers.subject }}",
+                    "rightValue": "Casa 84",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    },
+                    "id": "5b59ba56-6f16-4869-b390-b71497062b57"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "1aa520e3-c845-42f9-831e-d46c904327a9",
+                    "leftValue": "={{ $json.headers.subject }}",
+                    "rightValue": "Juegos",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "1ded1e4e-f40f-4318-97a5-d3a5eff45753",
+                    "leftValue": "={{ $json.headers.subject }}",
+                    "rightValue": "Apto Centro",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -304,
+        -176
+      ],
+      "id": "e3f44356-6464-4693-b260-23fb22bea548",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "inputDataFieldName": "attachment_0",
+        "driveId": {
+          "__rl": true,
+          "value": "My Drive",
+          "mode": "list",
+          "cachedResultName": "My Drive",
+          "cachedResultUrl": "https://drive.google.com/drive/my-drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1r63M-44mvEl9HJ3ELbMPYlVfAvRLkBnE",
+          "mode": "list",
+          "cachedResultName": "Facturas apto",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1r63M-44mvEl9HJ3ELbMPYlVfAvRLkBnE"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        0,
+        96
+      ],
+      "id": "e09243fe-d8be-494a-9c60-f742c41d7dbe",
+      "name": "Negocio 1",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "4sdo3Ht5bWwhBq3U",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "inputDataFieldName": "attachment_0",
+        "driveId": {
+          "__rl": true,
+          "value": "My Drive",
+          "mode": "list",
+          "cachedResultName": "My Drive",
+          "cachedResultUrl": "https://drive.google.com/drive/my-drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1a48GtTKTrCjK7A-YkXG7dNNIPJECu7F5",
+          "mode": "list",
+          "cachedResultName": "Facturas Juegos",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1a48GtTKTrCjK7A-YkXG7dNNIPJECu7F5"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        0,
+        -144
+      ],
+      "id": "effc3434-19d0-4289-b364-b863185ca064",
+      "name": "Facturas Juegos",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "4sdo3Ht5bWwhBq3U",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "inputDataFieldName": "attachment_0",
+        "driveId": {
+          "__rl": true,
+          "value": "My Drive",
+          "mode": "list",
+          "cachedResultName": "My Drive",
+          "cachedResultUrl": "https://drive.google.com/drive/my-drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1ir9BKeAvPGOqatXKWCSCidHCFnZhwJvr",
+          "mode": "list",
+          "cachedResultName": "Facturas Casa",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1ir9BKeAvPGOqatXKWCSCidHCFnZhwJvr"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        0,
+        -384
+      ],
+      "id": "4c89dcc8-c7c3-4c7c-b8de-6a34a56b942d",
+      "name": "Facturas Casa",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "4sdo3Ht5bWwhBq3U",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Get a message').item.json.id }}",
+        "labelIds": [
+          "Label_587492354812827356"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        208,
+        -144
+      ],
+      "id": "3eb7d757-2776-425b-9895-dfefb713f30a",
+      "name": "Add label to Facturas juegos",
+      "webhookId": "7ab2b35b-c272-44bf-ba75-74faa619624b",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "QZfeVFckr58y7Pxe",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Get a message').item.json.id }}",
+        "labelIds": [
+          "Label_1673830408105824382"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        208,
+        -384
+      ],
+      "id": "00e07847-053e-41c8-b9d1-8b1c1aa576bd",
+      "name": "Facturas Casa1",
+      "webhookId": "c8fe3bf5-0bd6-4deb-86ed-cb95fddbf8a6",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "QZfeVFckr58y7Pxe",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Switch').item.json.id }}",
+        "labelIds": [
+          "Label_4581702219911412068"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        224,
+        96
+      ],
+      "id": "3972423d-1284-47f1-a4ed-94a5e78c6abb",
+      "name": "Negocio ",
+      "webhookId": "0a74a8eb-e587-412b-b5c3-75693547dc08",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "QZfeVFckr58y7Pxe",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a message": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Facturas Casa",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Facturas Juegos",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Negocio 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Facturas Casa": {
+      "main": [
+        [
+          {
+            "node": "Facturas Casa1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Facturas Juegos": {
+      "main": [
+        [
+          {
+            "node": "Add label to Facturas juegos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Negocio 1": {
+      "main": [
+        [
+          {
+            "node": "Negocio ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "749b6b49-6c67-40c8-8103-473f50ad389c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "950333a3ec38529494b79155ca5e5561daacdcd1e6ed0f65d5a80ebddd7f87b1"
+  },
+  "id": "rGXCLs7B2EfYjFq6",
+  "tags": []
+}
